@@ -13,8 +13,8 @@ class FeaturesGridView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         FeatureItem(
-          image: 'assets/images/math.png',
-          title: "Study Schedule",
+          image: 'assets/images/agenda.png',
+          title: "My Agenda",
         ),
         SpaceH(10),
         FeatureItem(
