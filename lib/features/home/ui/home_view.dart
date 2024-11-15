@@ -1,5 +1,4 @@
 import 'package:computers/core/utils/my_colors.dart';
-
 import 'package:computers/features/home/ui/widgets/custom_app_bar.dart';
 import 'package:computers/features/home/ui/widgets/exam%20counter/exam_counter.dart';
 import 'package:computers/features/home/ui/widgets/features%20grid/feature_grid_view.dart';
@@ -15,13 +14,14 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-          currentIndex: 0,
-          selectedItemColor: MyColors.primary,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Courses'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          ]),
+        currentIndex: 0,
+        selectedItemColor: MyColors.primary,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Courses'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),

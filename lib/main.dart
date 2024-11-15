@@ -2,6 +2,7 @@ import 'package:computers/core/utils/my_colors.dart';
 import 'package:computers/features/splash/splash_view.dart';
 import 'package:flutter/material.dart';
 
+
 void main() {
   runApp(const StudyHub());
 }
@@ -21,5 +22,9 @@ class StudyHub extends StatelessWidget {
     );
   }
 }
+
+// Home View ui done  
+// PDf View done 
+
 
 
