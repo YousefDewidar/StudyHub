@@ -1,6 +1,6 @@
 import 'package:computers/core/utils/my_colors.dart';
 import 'package:computers/core/utils/space.dart';
-import 'package:computers/features/home/ui/widgets/exam%20counter/num_card.dart';
+import 'package:computers/features/home/ui/widgets/exam%20counter/time_data.dart';
 import 'package:flutter/material.dart';
 
 class ExamCounter extends StatelessWidget {
@@ -25,59 +25,7 @@ class ExamCounter extends StatelessWidget {
                 style: TextStyle(color: MyColors.kBackG, fontSize: 20),
               ),
               const SpaceV(15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      const Row(
-                        children: [
-                          NumberCard(num: "1"),
-                          SpaceH(10),
-                          NumberCard(num: "0"),
-                        ],
-                      ),
-                      const SpaceV(10),
-                      Text(
-                        "Days",
-                        style: TextStyle(color: MyColors.kBackG, fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      const Row(
-                        children: [
-                          NumberCard(num: "1"),
-                          SpaceH(10),
-                          NumberCard(num: "1"),
-                        ],
-                      ),
-                      const SpaceV(10),
-                      Text(
-                        "Hours",
-                        style: TextStyle(color: MyColors.kBackG, fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      const Row(
-                        children: [
-                          NumberCard(num: "0"),
-                          SpaceH(10),
-                          NumberCard(num: "2"),
-                        ],
-                      ),
-                      const SpaceV(10),
-                      Text(
-                        "Minutes",
-                        style: TextStyle(color: MyColors.kBackG, fontSize: 16),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              const TimeDataWidget(),
             ],
           ),
         ),
