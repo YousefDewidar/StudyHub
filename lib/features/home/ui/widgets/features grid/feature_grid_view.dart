@@ -17,7 +17,13 @@ class FeaturesGridView extends StatelessWidget {
         FeatureItem(
           image: 'assets/images/agenda.png',
           title: "My Agenda",
-          onTap: () {},
+          onTap: () async {
+            // for (var element in coursesList) {
+            //   var ele = element.toJson();
+
+            //   await Database.addItem(colName: Strings.coursesCol, data: ele);
+            // }
+          },
         ),
         const SpaceH(10),
         FeatureItem(
