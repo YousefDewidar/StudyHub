@@ -19,7 +19,7 @@ class CourseItem extends StatelessWidget {
           Image.asset(
             course.img,
             width: MediaQuery.of(context).size.width * .35 - 20,
-            height: 80,
+            height: 100,
           ),
           Expanded(
             child: Column(

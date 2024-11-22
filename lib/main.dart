@@ -24,7 +24,7 @@ class StudyHub extends StatelessWidget {
         "pdf_view": (context) => const CustomPdfView(),
         "courses_view": (context) => const CoursesView(),
       },
-      initialRoute: "courses_view",
+      initialRoute: "/",
     );
   }
 }

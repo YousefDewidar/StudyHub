@@ -24,6 +24,7 @@ class _SplashViewState extends State<SplashView>
     animationController.forward();
 
     Future.delayed(const Duration(seconds: 2), () {
+      precacheImage(const AssetImage('assets/logo/logo_splash.png'), context);
       Navigator.pushReplacement(
         context,
         PageTransition(
@@ -48,12 +49,10 @@ class _SplashViewState extends State<SplashView>
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          FadeTransition(
-            opacity: animation,
-            child: Image.asset(
-              'assets/logo/logo_splash.png',
-              height: 200,
-            ),
+          Image.asset(
+            filterQuality: FilterQuality.medium,
+            'assets/logo/logo_splash.png',
+            height: 200,
           ),
           const SizedBox(height: 30),
           ScaleTransition(
