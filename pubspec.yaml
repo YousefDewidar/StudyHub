@@ -30,6 +30,7 @@ flutter:
   assets:
     - assets/logo/
     - assets/images/
+    - assets/images/courses/
 
   fonts:
     - family: Cairo

@@ -1,7 +1,8 @@
 import 'package:computers/core/utils/my_colors.dart';
+import 'package:computers/core/widgets/pdf%20view/custom_pdf_view.dart';
+import 'package:computers/features/courses/ui/courses_view.dart';
 import 'package:computers/features/splash/splash_view.dart';
 import 'package:flutter/material.dart';
-
 
 void main() {
   runApp(const StudyHub());
@@ -12,19 +13,18 @@ class StudyHub extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-        theme: ThemeData(
+      theme: ThemeData(
         scaffoldBackgroundColor: MyColors.kBackG,
         fontFamily: 'Cairo',
       ),
-      home: const SplashView(),
+      routes: {
+        "/": (context) => const SplashView(),
+        "pdf_view": (context) => const CustomPdfView(),
+        "courses_view": (context) => const CoursesView(),
+      },
+      initialRoute: "courses_view",
     );
   }
 }
-
-// Home View ui done  
-// PDf View done 
-
-
-

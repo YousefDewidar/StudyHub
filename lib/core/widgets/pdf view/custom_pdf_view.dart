@@ -104,12 +104,12 @@ class _CustomPdfViewState extends State<CustomPdfView>
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white)),
-        backgroundColor: Colors.deepPurple,
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black)),
+        backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
         title: const Text(
           "Lec 3",
-          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
+          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black),
         ),
         centerTitle: true,
       ),
