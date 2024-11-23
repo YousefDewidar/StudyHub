@@ -19,19 +19,19 @@ class LecSecRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           LecOrSecOrExamWidget(
-            num: course.numLec,
+            num: course.lectures?.length.toString() ?? "0",
             title: "Lectures",
             onTap: () {},
           ),
           const SpaceH(5),
           LecOrSecOrExamWidget(
-            num: course.numSec,
+            num: course.sections?.length.toString() ?? "0",
             title: "Sections",
             onTap: () {},
           ),
           const SpaceH(5),
           LecOrSecOrExamWidget(
-            num: course.numLec,
+            num:course.exams?.length.toString() ?? "0",
             title: "Exams",
             onTap: () {},
           ),

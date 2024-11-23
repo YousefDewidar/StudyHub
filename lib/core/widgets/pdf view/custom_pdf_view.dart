@@ -6,7 +6,9 @@ import 'package:internet_file/internet_file.dart';
 import 'package:pdfx/pdfx.dart';
 
 class CustomPdfView extends StatefulWidget {
-  const CustomPdfView({super.key});
+  const CustomPdfView({super.key, required this.pdfLink, required this.title});
+  final String pdfLink;
+  final String title;
 
   @override
   State<CustomPdfView> createState() => _CustomPdfViewState();
@@ -17,20 +19,35 @@ class _CustomPdfViewState extends State<CustomPdfView>
   late ConfettiController _confettiController;
   late Animation<double> _animation;
   late AnimationController _animationController;
+  late PdfController pdfController;
 
-  PdfController pdfController = PdfController(
-      document: PdfDocument.openData(InternetFile.get(
-          'https://drive.google.com/uc?export=download&id=1YqIwXcQAhM-3UudLvYokzzini2s4_GWn')));
+  String convertToDirectDownload(String link) {
+    final regex = RegExp(r"/d/([a-zA-Z0-9_-]+)/");
+    final match = regex.firstMatch(link);
+
+    if (match != null) {
+      final fileId = match.group(1); // استخراج ID الملف
+      return "https://drive.google.com/uc?export=download&id=$fileId";
+    } else {
+      throw const FormatException("Invalid Google Drive link format");
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    try {
+      String link = convertToDirectDownload(widget.pdfLink);
+      pdfController =
+          PdfController(document: PdfDocument.openData(InternetFile.get(link)));
+    } catch (e) {
+      null;
+    }
 
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 260),
     );
-
     final curvedAnimation =
         CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
     _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
@@ -76,7 +93,7 @@ class _CustomPdfViewState extends State<CustomPdfView>
               showDialog(
                 context: context,
                 builder: (context) {
-                  return  FindPageWidget(pdfController: pdfController);
+                  return FindPageWidget(pdfController: pdfController);
                 },
               );
               _animationController.reverse();
@@ -103,12 +120,14 @@ class _CustomPdfViewState extends State<CustomPdfView>
       ),
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black)),
         backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
-        title: const Text(
-          "Lec 3",
+        title: Text(
+          widget.title,
           style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black),
         ),
         centerTitle: true,

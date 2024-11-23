@@ -3,7 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Database {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  static Future<List<Map<String, dynamic>>> getData(String colName) async {
+  static Future<List<Map<String, dynamic>>> getAllDataCourses(
+      String colName) async {
     try {
       List<Map<String, dynamic>> data = [];
       await _firestore.collection(colName).get().then(

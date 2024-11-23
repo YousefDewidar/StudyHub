@@ -1,5 +1,4 @@
 import 'package:computers/core/utils/my_colors.dart';
-import 'package:computers/core/widgets/pdf%20view/custom_pdf_view.dart';
 import 'package:computers/features/courses/ui/courses_view.dart';
 import 'package:computers/features/splash/splash_view.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,7 +23,6 @@ class StudyHub extends StatelessWidget {
       ),
       routes: {
         "/": (context) => const SplashView(),
-        "pdf_view": (context) => const CustomPdfView(),
         "courses_view": (context) => const CoursesView(),
       },
       initialRoute: "/",

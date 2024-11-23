@@ -1,3 +1,4 @@
+import 'package:computers/core/utils/space.dart';
 import 'package:computers/features/courses/data/models/course.dart';
 import 'package:computers/features/courses/ui/course_details_view.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +22,7 @@ class CourseItem extends StatelessWidget {
         );
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 17),
-        height: 150,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 22),
         decoration: BoxDecoration(
           color: course.boxColor,
           borderRadius: BorderRadius.circular(26),
@@ -46,9 +46,9 @@ class CourseItem extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      height: 1,
                     ),
                   ),
+                  const SpaceV(3),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * .65 - 50,
                     child: Text(
@@ -59,23 +59,31 @@ class CourseItem extends StatelessWidget {
                           height: 1.1),
                     ),
                   ),
+                  const SpaceV(15),
                   const Divider(
                     color: Color.fromARGB(139, 255, 255, 255),
                     endIndent: 20,
                   ),
+                  const SpaceV(10),
                   Text.rich(
                     TextSpan(
                       style: const TextStyle(
                           height: .2, color: Colors.white, fontSize: 15),
                       children: [
                         TextSpan(
-                          text: "Lec ${course.numLec}",
+                          text: "Lec ${course.lectures?.length ?? 0}",
                         ),
                         const TextSpan(
-                          text: "                         ",
+                          text: "         ",
                         ),
                         TextSpan(
-                          text: "Sec ${course.numSec}",
+                          text: "Sec ${course.sections?.length ?? 0}",
+                        ),
+                        const TextSpan(
+                          text: "         ",
+                        ),
+                        TextSpan(
+                          text: "Exams ${course.exams?.length ?? 0}",
                         ),
                       ],
                     ),

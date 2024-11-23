@@ -14,14 +14,14 @@ class LecturesGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GridView.builder(
-        itemCount: 6,
+        itemCount: course.lectures?.length ?? 0,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 20,
           crossAxisSpacing: 20,
         ),
         itemBuilder: (context, index) {
-          return LectureCard(course: course);
+          return LectureCard(course: course, index: index);
         },
       ),
     );

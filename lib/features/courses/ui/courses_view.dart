@@ -31,7 +31,7 @@ class CoursesView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: FutureBuilder<List<Map<String, dynamic>>>(
-              future: Database.getData(Strings.coursesCol),
+              future: Database.getAllDataCourses(Strings.coursesCol),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.separated(
