@@ -7,14 +7,20 @@ class Course {
   final String numLec;
   final String numSec;
   final Color boxColor;
+  final List<Map<String?, String?>> lectures;
+  final List<Map<String?, String?>> sections;
+  final List<String?> exams;
 
   Course({
+    required this.sub,
     required this.numLec,
     required this.numSec,
-    required this.sub,
     required this.disc,
     required this.boxColor,
     required this.img,
+    required this.lectures,
+    required this.sections,
+    required this.exams,
   });
 
   Map<String, dynamic> toJson() {
@@ -24,7 +30,10 @@ class Course {
       'img': img,
       'numLec': numLec,
       'numSec': numSec,
-      'boxColor': boxColor.value, // حفظ قيمة اللون كعدد
+      'boxColor': boxColor.value,
+      'exams': exams,
+      'sections': sections,
+      'lectures': lectures,
     };
   }
 
@@ -35,7 +44,10 @@ class Course {
       img: json['img'] as String,
       numLec: json['numLec'] as String,
       numSec: json['numSec'] as String,
-      boxColor: Color(json['boxColor'] as int), // تحويل العدد إلى لون
+      boxColor: Color(json['boxColor'] as int),
+      lectures: json['lectures'],
+      sections: json['sections'],
+      exams: json['exams'],
     );
   }
 }

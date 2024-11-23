@@ -28,4 +28,12 @@ class Database {
   }) async {
     await _firestore.collection(colName).add(data);
   }
+
+  static Future<void> updateItem({
+    required String colName,
+    required String docId,
+    required Map<String, dynamic> data,
+  }) async {
+    await _firestore.collection(colName).doc(docId).update(data);
+  }
 }
