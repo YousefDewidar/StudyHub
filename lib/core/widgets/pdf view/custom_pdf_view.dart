@@ -128,22 +128,22 @@ class _CustomPdfViewState extends State<CustomPdfView>
         scrolledUnderElevation: 0,
         title: Text(
           widget.title,
-          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.black),
+          style:
+              const TextStyle(fontWeight: FontWeight.w700, color: Colors.black),
         ),
         centerTitle: true,
       ),
       body: Stack(children: [
         PdfView(
-            controller: pdfController,
-            scrollDirection: Axis.vertical,
-            onPageChanged: (page) {
-              page == pdfController.pagesCount
-                  ? _confettiController.play()
-                  : null;
-              setState(() {});
-            },
-            backgroundDecoration:
-                BoxDecoration(color: Colors.amber.withOpacity(.15))),
+          controller: pdfController,
+          scrollDirection: Axis.vertical,
+          onPageChanged: (page) {
+            page == pdfController.pagesCount
+                ? _confettiController.play()
+                : null;
+            setState(() {});
+          },
+        ),
         pdfController.page == pdfController.pagesCount
             ? ConfettiWidget(
                 confettiController: _confettiController,

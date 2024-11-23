@@ -22,8 +22,7 @@ class _TimeDataWidgetState extends State<TimeDataWidget> {
     DateTime now = DateTime.now();
     late DateTime time;
     late Duration difference;
-
-    if (pref.containsKey("exam_time")) {
+    if (pref.containsKey("exam_time") ) {
       time = DateTime.parse(pref.getString('exam_time')!);
       difference = time.difference(now);
       if (difference.inDays < 5) {

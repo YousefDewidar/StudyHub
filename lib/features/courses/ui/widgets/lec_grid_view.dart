@@ -16,10 +16,10 @@ class LecturesGridView extends StatelessWidget {
       child: GridView.builder(
         itemCount: course.lectures?.length ?? 0,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 20,
-          crossAxisSpacing: 20,
-        ),
+            crossAxisCount: 2,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            childAspectRatio: 2 / 2.2),
         itemBuilder: (context, index) {
           return LectureCard(course: course, index: index);
         },
