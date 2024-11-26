@@ -1,18 +1,20 @@
 import 'package:computers/core/utils/my_colors.dart';
 import 'package:computers/core/widgets/pdf%20view/custom_pdf_view.dart';
-import 'package:computers/features/courses/data/models/course.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 class LectureCard extends StatelessWidget {
   const LectureCard({
     super.key,
-    required this.course,
     required this.index,
+    required this.pdfLink,
+    required this.vidLink,
+    required this.typeCourse,
   });
-
-  final Course course;
   final int index;
+  final String typeCourse;
+  final String? pdfLink;
+  final String? vidLink;
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +30,13 @@ class LectureCard extends StatelessWidget {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12),
                   onTap: () {
-                    if (course.lectures?[index]['pdf'] != null) {
-                    
+                    if (pdfLink != null) {
                       Navigator.push(
                         context,
                         PageTransition(
                           child: CustomPdfView(
-                            title: "Lec ${index + 1}",
-                            pdfLink: course.lectures![index]['pdf'],
+                            title: "$typeCourse ${index + 1}",
+                            pdfLink: pdfLink!,
                           ),
                           type: PageTransitionType.fade,
                         ),
@@ -105,14 +106,13 @@ class LectureCard extends StatelessWidget {
         ),
         // اسم المحاضرة اللي ف نص الويدجت
         Container(
-          width: 85,
-          padding: const EdgeInsets.all(1),
+          padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: const Color.fromARGB(68, 0, 0, 0)),
           child: Text(
             textAlign: TextAlign.center,
-            "Lec ${index + 1}",
+            "$typeCourse ${index + 1}",
             style: const TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.w600,

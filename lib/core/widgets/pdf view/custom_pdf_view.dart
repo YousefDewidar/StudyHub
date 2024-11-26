@@ -26,7 +26,7 @@ class _CustomPdfViewState extends State<CustomPdfView>
     final match = regex.firstMatch(link);
 
     if (match != null) {
-      final fileId = match.group(1); // استخراج ID الملف
+      final fileId = match.group(1);
       return "https://drive.google.com/uc?export=download&id=$fileId";
     } else {
       throw const FormatException("Invalid Google Drive link format");
@@ -134,14 +134,27 @@ class _CustomPdfViewState extends State<CustomPdfView>
         centerTitle: true,
       ),
       body: Stack(children: [
-        PdfView(
-          controller: pdfController,
-          scrollDirection: Axis.vertical,
-          onPageChanged: (page) {
-            page == pdfController.pagesCount
-                ? _confettiController.play()
-                : null;
-            setState(() {});
+        FutureBuilder(
+          future: pdfController.document,
+          builder: (context, doc) {
+            if (doc.hasData) {
+              return PdfView(
+                controller: pdfController,
+                scrollDirection: Axis.vertical,
+                onPageChanged: (page) {
+                  page == pdfController.pagesCount
+                      ? _confettiController.play()
+                      : null;
+                  setState(() {});
+                },
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.orange,
+                ),
+              );
+            }
           },
         ),
         pdfController.page == pdfController.pagesCount

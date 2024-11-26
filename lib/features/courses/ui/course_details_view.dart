@@ -1,6 +1,6 @@
 import 'package:computers/features/courses/data/models/course.dart';
-import 'package:computers/features/courses/ui/widgets/lec_grid_view.dart';
-
+import 'package:computers/features/courses/ui/widgets/exam_card.dart';
+import 'package:computers/features/courses/ui/widgets/lec_card.dart';
 import 'package:flutter/material.dart';
 
 class CourseDetailsView extends StatefulWidget {
@@ -14,11 +14,20 @@ class CourseDetailsView extends StatefulWidget {
 class _CourseDetailsViewState extends State<CourseDetailsView>
     with SingleTickerProviderStateMixin {
   late TabController controller;
+  String courseType = "Lec";
+  late List? courseList;
 
   @override
   void initState() {
+    courseList = widget.course.lectures;
     controller = TabController(length: 3, vsync: this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,6 +55,19 @@ class _CourseDetailsViewState extends State<CourseDetailsView>
           child: Column(
             children: [
               TabBar(
+                onTap: (value) {
+                  if (value == 0) {
+                    courseType = "Lec";
+                    courseList = widget.course.lectures;
+                  } else if (value == 1) {
+                    courseType = "Sec";
+                    courseList = widget.course.sections;
+                  } else {
+                    courseType = "Exam";
+                    courseList = widget.course.exams;
+                  }
+                  setState(() {});
+                },
                 labelColor: Colors.black,
                 indicatorColor: Colors.black,
                 controller: controller,
@@ -70,7 +92,27 @@ class _CourseDetailsViewState extends State<CourseDetailsView>
                   ),
                 ],
               ),
-              LecturesGridView(course: widget.course),
+              Expanded(
+                child: GridView.builder(
+                  itemCount: courseList?.length ?? 0,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 20,
+                    childAspectRatio: 2 / 2.2,
+                  ),
+                  itemBuilder: (context, index) {
+                    return courseType == "Exam"
+                        ? ExamCard(index: index, pdfLink: courseList?[index])
+                        : LectureCard(
+                            typeCourse: courseType,
+                            index: index,
+                            pdfLink: courseList?[index]['pdf'],
+                            vidLink: courseList?[index]['vid'],
+                          );
+                  },
+                ),
+              ),
             ],
           ),
         ),
