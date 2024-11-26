@@ -29,6 +29,7 @@ class LectureCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   onTap: () {
                     if (course.lectures?[index]['pdf'] != null) {
+                    
                       Navigator.push(
                         context,
                         PageTransition(
@@ -58,13 +59,15 @@ class LectureCard extends StatelessWidget {
                         topRight: Radius.circular(12),
                       ),
                     ),
-                    child: const Text(
-                      textAlign: TextAlign.center,
-                      "Pdf",
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                      ),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/images/pdf.png',
+                          width: 50,
+                          height: 40,
+                        ),
+                        const Spacer(),
+                      ],
                     ),
                   ),
                 ),
@@ -78,22 +81,19 @@ class LectureCard extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 10),
                     width: double.infinity,
                     decoration: const BoxDecoration(
-                      color: Colors.red,
+                      color: Colors.orange,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(12),
                         bottomRight: Radius.circular(12),
                       ),
                     ),
-                    child: const Column(
+                    child: Column(
                       children: [
-                        Spacer(),
-                        Text(
-                          textAlign: TextAlign.center,
-                          "Video",
-                          style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.white,
-                          ),
+                        const Spacer(),
+                        Image.asset(
+                          'assets/images/youtube.png',
+                          width: 50,
+                          height: 50,
                         ),
                       ],
                     ),

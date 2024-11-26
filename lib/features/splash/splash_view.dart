@@ -1,5 +1,5 @@
 import 'package:computers/core/utils/my_colors.dart';
-import 'package:computers/features/auth/ui/signup_view.dart';
+import 'package:computers/features/home/ui/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -29,7 +29,7 @@ class _SplashViewState extends State<SplashView>
         context,
         PageTransition(
           type: PageTransitionType.fade,
-          child: const SignupView(),
+          child: const HomeView(),
         ),
       );
     });
