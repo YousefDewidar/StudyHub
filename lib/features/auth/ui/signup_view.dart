@@ -13,25 +13,20 @@ class SignupView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SpaceV(50),
                 Image.asset("assets/logo/logo_splash.png", height: 160),
-
-                // Welcome
                 const Text(
                   'StudyHub',
                   style: TextStyle(fontSize: 35),
                 ),
-
                 Text(
                   'Your ultimate academic companion',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
-
                 const SpaceV(18),
-
                 const SignupForm()
               ],
             ),
@@ -41,3 +36,5 @@ class SignupView extends StatelessWidget {
     );
   }
 }
+
+// 

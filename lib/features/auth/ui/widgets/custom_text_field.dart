@@ -40,9 +40,9 @@ class CustomTextField extends StatelessWidget {
   }
 
   String? handleValidation(String? value) {
-    if (value!.isEmpty && label == 'Email') {
+    if (value!.isEmpty && label == 'University Email') {
       return 'Please enter your email';
-    } else if (value.isEmpty && label == 'Name') {
+    } else if (value.isEmpty && label == 'Full Name') {
       return 'Please enter your Name';
     } else {
       return null;

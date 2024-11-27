@@ -28,9 +28,9 @@ class StudyHub extends StatelessWidget {
       routes: {
         "/": (context) => const SplashView(),
         "courses_view": (context) => const CoursesView(),
-        "SignupView": (context) => const SignupView(),
+        "signupView": (context) => const SignupView(),
       },
-      initialRoute: "/",
+      initialRoute: "signupView",
     );
   }
 }
