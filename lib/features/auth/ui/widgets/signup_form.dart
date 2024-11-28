@@ -1,12 +1,12 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
-import 'package:computers/core/firebase/database.dart';
 import 'package:computers/core/utils/space.dart';
-import 'package:computers/features/auth/data/model/user.dart';
+import 'package:computers/features/auth/logic/cubit/auth_cubit.dart';
+import 'package:computers/features/auth/logic/cubit/auth_state.dart';
 import 'package:computers/features/auth/ui/widgets/custom_button.dart';
 import 'package:computers/features/auth/ui/widgets/custom_text_field.dart';
 import 'package:computers/features/auth/ui/widgets/password_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
@@ -23,6 +23,16 @@ class _SignupFormState extends State<SignupForm> {
   final TextEditingController nameCon = TextEditingController();
   final SingleSelectController<String> levelCon = SingleSelectController(null);
   final List<String> level = const ['first', 'second', 'third', 'fourth'];
+  bool isLoading = false;
+
+  @override
+  void dispose() {
+    emailCon.dispose();
+    passwordCon.dispose();
+    nameCon.dispose();
+    levelCon.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,48 +84,48 @@ class _SignupFormState extends State<SignupForm> {
               onChanged: (value) {},
             ),
             SpaceV(MediaQuery.of(context).size.height * .12),
-            CustomButton(
-              onPressed: () async {
-                await registerLogic(context);
+            BlocConsumer<AuthCubit, AuthState>(
+              listener: (context, state) {
+                if (state is RegisterLoading) {
+                  isLoading = true;
+                } else if (state is RegisterFailuer) {
+                  isLoading = false;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Failed!'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                } else if (state is RegisterSuccess) {
+                  isLoading = false;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('Created Done'),
+                        duration: Duration(seconds: 2)),
+                  );
+                }
               },
-              text: 'Register',
+              builder: (context, state) {
+                return CustomButton(
+                  text: 'Register',
+                  isLoading: isLoading,
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      BlocProvider.of<AuthCubit>(context).createUser(
+                        email: emailCon.text,
+                        password: passwordCon.text,
+                        name: nameCon.text,
+                        level: levelCon.value!,
+                      );
+                    } else {
+                      autovalidateMode = AutovalidateMode.always;
+                      setState(() {});
+                    }
+                  },
+                );
+              },
             ),
           ],
         ));
-  }
-
-  Future<void> registerLogic(BuildContext context) async {
-    if (formKey.currentState!.validate()) {
-      try {
-        await _register(emailCon.text, passwordCon.text);
-        Database.addUser(
-          user: UserModel(
-            fullName: nameCon.text,
-            uniEmail: emailCon.text,
-            password: passwordCon.text,
-            level: levelCon.value!,
-          ),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('CreatedDone'), duration: Duration(seconds: 2)),
-        );
-      } on FirebaseAuthException {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed!'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      }
-    } else {
-      autovalidateMode = AutovalidateMode.always;
-      setState(() {});
-    }
-  }
-
-  static Future<void> _register(String email, String password) async {
-    await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password);
   }
 }
