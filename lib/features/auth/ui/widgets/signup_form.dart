@@ -1,4 +1,5 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:computers/core/utils/helper.dart';
 import 'package:computers/core/utils/space.dart';
 import 'package:computers/features/auth/logic/cubit/auth_cubit.dart';
 import 'package:computers/features/auth/logic/cubit/auth_state.dart';
@@ -16,27 +17,26 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
+  final List<String> level = const ['first', 'second', 'third', 'fourth'];
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   final TextEditingController emailCon = TextEditingController();
   final TextEditingController passwordCon = TextEditingController();
   final TextEditingController nameCon = TextEditingController();
   final SingleSelectController<String> levelCon = SingleSelectController(null);
-  final List<String> level = const ['first', 'second', 'third', 'fourth'];
-  bool isLoading = false;
-
-  @override
-  void dispose() {
-    emailCon.dispose();
-    passwordCon.dispose();
-    nameCon.dispose();
-    levelCon.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
+      if (state is RegisterVaildate) {
+        autovalidateMode = AutovalidateMode.always;
+      } else if (state is RegisterFailuer) {
+        HelperFuns.showMessage(context, state.errorMsg);
+      } else if (state is RegisterSuccess) {
+        HelperFuns.showMessage(context, 'Created Done');
+      }
+    }, builder: (context, state) {
+      return Form(
         key: formKey,
         autovalidateMode: autovalidateMode,
         child: Column(
@@ -84,48 +84,30 @@ class _SignupFormState extends State<SignupForm> {
               onChanged: (value) {},
             ),
             SpaceV(MediaQuery.of(context).size.height * .12),
-            BlocConsumer<AuthCubit, AuthState>(
-              listener: (context, state) {
-                if (state is RegisterLoading) {
-                  isLoading = true;
-                } else if (state is RegisterFailuer) {
-                  isLoading = false;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Failed!'),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
-                } else if (state is RegisterSuccess) {
-                  isLoading = false;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Created Done'),
-                        duration: Duration(seconds: 2)),
-                  );
-                }
-              },
-              builder: (context, state) {
-                return CustomButton(
-                  text: 'Register',
-                  isLoading: isLoading,
-                  onPressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      BlocProvider.of<AuthCubit>(context).createUser(
-                        email: emailCon.text,
-                        password: passwordCon.text,
-                        name: nameCon.text,
-                        level: levelCon.value!,
-                      );
-                    } else {
-                      autovalidateMode = AutovalidateMode.always;
-                      setState(() {});
-                    }
-                  },
+            CustomButton(
+              text: 'Register',
+              isLoading: state is RegisterLoading,
+              onPressed: () async {
+                await BlocProvider.of<AuthCubit>(context).createUser(
+                  email: emailCon.text,
+                  password: passwordCon.text,
+                  name: nameCon.text,
+                  level: levelCon.value,
                 );
               },
-            ),
+            )
           ],
-        ));
+        ),
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    emailCon.dispose();
+    passwordCon.dispose();
+    nameCon.dispose();
+    levelCon.dispose();
+    super.dispose();
   }
 }

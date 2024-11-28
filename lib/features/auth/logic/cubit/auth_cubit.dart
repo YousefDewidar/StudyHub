@@ -1,3 +1,4 @@
+import 'package:computers/core/firebase/error_handle.dart';
 import 'package:computers/features/auth/data/repo/auth_repo.dart';
 import 'package:computers/features/auth/logic/cubit/auth_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,21 +13,27 @@ class AuthCubit extends Cubit<AuthState> {
     required String email,
     required String password,
     required String name,
-    required String level,
+    required String? level,
   }) async {
-    emit(RegisterLoading());
+    if (email.isEmpty || password.isEmpty || name.isEmpty || level == null) {
+      emit(RegisterVaildate());
+    } else {
+      emit(RegisterLoading());
+      try {
+        await _authRepo.createUser(
+          email: email,
+          password: password,
+          name: name,
+          level: level,
+        );
 
-    try {
-      await _authRepo.createUser(
-        email: email,
-        password: password,
-        name: name,
-        level: level,
-      );
-
-      emit(RegisterSuccess());
-    } on FirebaseAuthException {
-      emit(RegisterFailuer());
+        emit(RegisterSuccess());
+      } on FirebaseAuthException catch (e) {
+        String errMsg = ErrorHandle.authHandle(e);
+        emit(RegisterFailuer(errMsg));
+      } catch (e) {
+        emit(RegisterFailuer("Failed to create account!"));
+      }
     }
   }
 }
