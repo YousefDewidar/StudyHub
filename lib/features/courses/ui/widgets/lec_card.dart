@@ -1,5 +1,7 @@
 import 'package:computers/core/utils/my_colors.dart';
 import 'package:computers/core/widgets/pdf%20view/custom_pdf_view.dart';
+import 'package:computers/features/courses/data/models/course.dart';
+import 'package:computers/features/courses/ui/course_video_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -10,11 +12,13 @@ class LectureCard extends StatelessWidget {
     required this.pdfLink,
     required this.vidLink,
     required this.typeCourse,
+    required this.course,
   });
   final int index;
   final String typeCourse;
   final String? pdfLink;
   final String? vidLink;
+  final Course course;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +81,28 @@ class LectureCard extends StatelessWidget {
               Expanded(
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12),
-                  onTap: () {},
+                  onTap: () {
+                    if (vidLink != null) {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          child: CourseVideoView(
+                            course: course,
+                            name: "$typeCourse ${index + 1}",
+                            url: vidLink!,
+                          ),
+                          type: PageTransitionType.fade,
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('video not available!'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
+                  },
                   child: Container(
                     padding: const EdgeInsets.only(bottom: 10),
                     width: double.infinity,

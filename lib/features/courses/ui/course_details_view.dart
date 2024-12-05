@@ -105,6 +105,7 @@ class _CourseDetailsViewState extends State<CourseDetailsView>
                     return courseType == "Exam"
                         ? ExamCard(index: index, pdfLink: courseList?[index])
                         : LectureCard(
+                            course: widget.course,
                             typeCourse: courseType,
                             index: index,
                             pdfLink: courseList?[index]['pdf'],

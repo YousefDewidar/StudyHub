@@ -25,6 +25,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   supabase_flutter: ^2.8.1
   file_picker:
+  youtube_player_flutter: ^9.1.1
 
 dev_dependencies:
   flutter_test:
